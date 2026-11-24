@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 60
+    },
+    "api/status.js": {
+      "maxDuration": 30
+    },
+    "api/download.js": {
+      "maxDuration": 30
+    }
+  }
+}

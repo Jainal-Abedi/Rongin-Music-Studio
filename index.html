@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101019">
+  <meta name="description" content="Personal Bengali AI Music Studio">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Rongin Music Studio</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♫</div>
+        <div><div class="brand-name">Rongin Studio</div><div class="brand-sub">PERSONAL AI MUSIC WORKSPACE</div></div>
+      </div>
+      <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙</button>
+    </header>
+
+    <main>
+      <section class="welcome">
+        <div class="eyebrow">YOUR CREATIVE SPACE</div>
+        <h1>Make something<br><span>beautiful.</span></h1>
+        <p>বাংলা ছড়া, শিশুতোষ গান ও ফোক-পপ মিউজিক তৈরি করো।</p>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading"><span class="step">01</span><h2>গানের তথ্য</h2></div>
+        <label for="songTitle">Song title</label>
+        <input id="songTitle" class="text-input" maxlength="80" value="কাঠবেড়ালি" placeholder="গানের নাম লিখুন">
+        <div class="section-heading subhead"><span class="step">02</span><h2>বাংলা Lyrics</h2></div>
+        <textarea id="lyrics" class="lyrics-input" maxlength="12000" spellcheck="false" placeholder="[Intro]&#10;...&#10;&#10;[Verse]&#10;তোমার গানের কথা এখানে লিখুন"></textarea>
+        <div class="field-tools">
+          <span id="charCount" class="muted">0 / 12000</span>
+          <div class="inline-actions">
+            <button class="small-btn" id="pasteLyricsBtn">▣ Paste</button>
+            <button class="small-btn danger-text" id="clearLyricsBtn">Clear</button>
+          </div>
+        </div>
+
+        <div class="section-heading subhead"><span class="step">03</span><h2>Music style & prompt</h2></div>
+        <textarea id="stylePrompt" class="style-input" maxlength="5000" placeholder="Describe genre, mood, instruments, vocals, tempo and production...">Premium Bengali children's folk-pop nursery rhyme, playful and joyful, sweet expressive childlike Bengali lead vocal with clear pronunciation, 122 BPM, 4/4, lively dholak and tabla, warm dotara, sweet bansuri flute, glockenspiel, marimba, pizzicato strings, soft handclaps and warm acoustic bass. Catchy melody, organic studio-quality instruments, polished clean mix, vocal clearly in front. Keep all lyrics in their original order. Instrumental-only break after the first chorus: 16 seconds of flute, dotara, glockenspiel and dholak, absolutely no singing, speech, humming or chanting during the break.</textarea>
+        <div class="preset-label">QUICK PRESETS</div>
+        <div class="chips">
+          <button class="chip" data-preset="Premium Bengali kids folk-pop, lively dholak and tabla, warm dotara, sweet bansuri flute, sparkling glockenspiel, joyful childlike Bengali vocal, 122 BPM.">Kids Folk-Pop</button>
+          <button class="chip" data-preset="Playful nursery rhyme, 122 BPM, bouncy 4/4 groove, clear sweet Bengali child vocal, dholak, flute, glockenspiel, marimba and handclaps.">Nursery 122 BPM</button>
+          <button class="chip" data-preset="Upbeat acoustic Bengali village folk vibe, dotara, bansuri, dholak, warm acoustic bass, cheerful child vocal, natural live-room feel.">Village Acoustic</button>
+        </div>
+        <div class="section-heading subhead"><span class="step">04</span><h2>Duration</h2></div>
+        <div class="duration-row" role="group" aria-label="Duration">
+          <button class="duration active" data-duration="60">60s</button>
+          <button class="duration" data-duration="90">90s</button>
+          <button class="duration" data-duration="120">120s <small>2 MIN</small></button>
+        </div>
+        <div class="generate-row">
+          <div class="mode-info"><span class="status-dot" id="modeDot"></span><span id="modeLabel">Demo mode active</span></div>
+          <button class="generate-btn" id="generateBtn"><span>✦</span> Generate music</button>
+        </div>
+        <div id="statusMessage" class="status-message" aria-live="polite"></div>
+      </section>
+
+      <section class="panel player-panel" id="playerPanel">
+        <div class="section-heading"><span class="step">♫</span><h2>Studio player</h2></div>
+        <div id="emptyPlayer" class="empty-player"><div class="empty-icon">♫</div><strong>Your next track starts here</strong><span>Generate a song to see it in the player.</span></div>
+        <div id="trackPlayer" class="track-player hidden">
+          <div class="track-top"><div class="cover-art">♫</div><div class="track-meta"><strong id="trackName">Untitled track</strong><span id="trackInfo">Generated audio</span></div></div>
+          <audio id="audioPlayer" controls preload="metadata"></audio>
+          <div class="waveform" id="waveform" aria-hidden="true"></div>
+          <div class="download-row">
+            <a class="download-btn" id="downloadBtn" href="#" download>↓ Download audio</a>
+            <button class="small-btn" id="saveHistoryBtn">Save to history</button>
+          </div>
+          <p class="hint">ডাউনলোড ফাইলটি মডেল যে ফরম্যাটে তৈরি করেছে, সেই ফরম্যাটেই থাকবে।</p>
+        </div>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="section-heading"><span class="step">↺</span><h2>Recent tracks</h2><button class="text-btn" id="clearHistoryBtn">Clear all</button></div>
+        <div id="historyList" class="history-list"><div class="history-empty">এখনও কোনো গান সেভ করা হয়নি।</div></div>
+      </section>
+      <footer>RONGIN STUDIO · PERSONAL WORKSPACE <span>Made for your creativity</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal">
+      <div class="modal-head"><div><div class="eyebrow">APP SETTINGS</div><h2 id="settingsTitle">Studio settings</h2></div><button class="icon-btn" id="closeSettingsBtn">×</button></div>
+      <div class="setting-card">
+        <div class="setting-title">Generation engine</div>
+        <p>fal.ai · ACE-Step (lyrics-to-audio)</p>
+        <div class="server-state" id="serverState">Checking server configuration…</div>
+      </div>
+      <div class="setting-card">
+        <div class="setting-title">Demo / Mock test mode</div>
+        <p>API ছাড়াই player ও download পরীক্ষা করতে Demo Mode চালু রাখুন।</p>
+        <label class="switch-line"><span>Demo mode</span><input type="checkbox" id="demoToggle" checked><span class="switch"></span></label>
+      </div>
+      <div class="setting-card security-note">
+        <strong>API Key নিরাপত্তা</strong>
+        <p>API Key এই অ্যাপে localStorage-এ রাখা হয় না। Vercel → Project → Settings → Environment Variables-এ <code>FAL_KEY</code> নামে সেট করুন। এতে Key ব্রাউজারে প্রকাশ পাবে না।</p>
+      </div>
+      <button class="generate-btn full-btn" id="closeSettingsDone">Done</button>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
